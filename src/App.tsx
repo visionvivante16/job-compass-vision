@@ -43,6 +43,7 @@ const About = lazy(() => import("./pages/About"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const JobsPreview = lazy(() => import("./pages/JobsPreview"));
 const Pricing = lazy(() => import("./pages/Pricing"));
+const Faq = lazy(() => import("./pages/Faq"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -131,7 +132,8 @@ function AppRoutes() {
       {/* Public preview / marketing routes */}
       <Route path="/jobs" element={<LazyPage><JobsPreview /></LazyPage>} />
       <Route path="/pricing" element={<LazyPage><Pricing /></LazyPage>} />
-      <Route path="/faq" element={<Navigate to="/#faq" replace />} />
+      {/* <Route path="/faq" element={<Navigate to="/#faq" replace />} /> */}
+      <Route path="/faq" element={<LazyPage><Faq /></LazyPage>} />
 
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<LazyPage><NotFound /></LazyPage>} />

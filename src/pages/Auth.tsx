@@ -8,10 +8,21 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/context/AuthContext";
 import { useUserRole } from "@/hooks/usePermissions";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
+// import { lovable } from "@/integrations/lovable/index";
 import { CountrySelectDialog } from "@/components/CountrySelectDialog";
 import { countries } from "@/data/countries";
-import { Mail, Lock, Loader2, Eye, EyeOff, Search, Check, ChevronDown, Briefcase, RefreshCw } from "lucide-react";
+import {
+  Mail,
+  Lock,
+  Loader2,
+  Eye,
+  EyeOff,
+  Search,
+  Check,
+  ChevronDown,
+  Briefcase,
+  RefreshCw,
+} from "lucide-react";
 import { toast } from "sonner";
 
 export default function Auth() {
@@ -22,7 +33,9 @@ export default function Auth() {
 
   const modeParam = searchParams.get("mode");
   const isSignupParam = searchParams.get("signup") === "true";
-  const [mode, setMode] = useState<"login" | "signup">(modeParam === "signup" || isSignupParam ? "signup" : "login");
+  const [mode, setMode] = useState<"login" | "signup">(
+    modeParam === "signup" || isSignupParam ? "signup" : "login",
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -89,13 +102,25 @@ export default function Auth() {
     };
 
     checkCountry();
-  }, [user, authLoading, roleLoading, userRole, navigate, showCountryPrompt, savingCountry, countryChecked]);
+  }, [
+    user,
+    authLoading,
+    roleLoading,
+    userRole,
+    navigate,
+    showCountryPrompt,
+    savingCountry,
+    countryChecked,
+  ]);
 
   const handleCountrySelected = async (selectedCountry: string) => {
     if (!user) return;
     setSavingCountry(true);
 
-    const { error } = await supabase.from("profiles").update({ country: selectedCountry }).eq("user_id", user.id);
+    const { error } = await supabase
+      .from("profiles")
+      .update({ country: selectedCountry })
+      .eq("user_id", user.id);
 
     if (error) {
       console.error("[AUTH] Failed to save country:", error);
@@ -118,14 +143,21 @@ export default function Auth() {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
-      const { error } = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: `${window.location.origin}`,
+      // const { error } = await lovable.auth.signInWithOAuth("google", {
+      //   redirect_uri: `${window.location.origin}`,
+      // });
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}`,
+        },
       });
-      console.log("ur68665465", window.location.origin, error);
+
+      console.log("resopnse ===>", window.location.origin, data);
 
       if (error) {
         toast.error("Google sign-in failed. Please try again.");
-        console.log("[AUTH] Google OAuth error:", error);
+        console.log("[AUTH] Google OAuth error: ===>", error);
       }
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
@@ -188,7 +220,9 @@ export default function Auth() {
           } else if (smsg.includes("rate") || smsg.includes("too many")) {
             toast.error("Too many attempts. Please wait a moment and try again.");
           } else if (smsg.includes("pwned") || smsg.includes("leaked") || smsg.includes("breach")) {
-            toast.error("This password has been found in a data breach. Please choose a different password.");
+            toast.error(
+              "This password has been found in a data breach. Please choose a different password.",
+            );
           } else {
             toast.error("Sign up failed. Please try again.");
           }
@@ -211,7 +245,11 @@ export default function Auth() {
             setShowVerificationBanner(true);
             setResendCooldown(60);
             toast.error("Please confirm your email. We've just re-sent you a confirmation link.");
-          } else if (msg.includes("invalid login credentials") || msg.includes("invalid") || msg.includes("credentials")) {
+          } else if (
+            msg.includes("invalid login credentials") ||
+            msg.includes("invalid") ||
+            msg.includes("credentials")
+          ) {
             toast.error("Incorrect email or password. Please try again.");
           } else if (msg.includes("rate") || msg.includes("too many")) {
             toast.error("Too many attempts. Please wait a moment and try again.");
@@ -258,8 +296,8 @@ export default function Auth() {
                   <p className="text-sm font-medium text-foreground">Please confirm your email</p>
                   <p className="text-xs text-muted-foreground mt-0.5">
                     We've sent a verification link to{" "}
-                    <span className="font-medium text-foreground">{verificationEmail}</span>. If you don't see it, check
-                    your spam/junk folder.
+                    <span className="font-medium text-foreground">{verificationEmail}</span>. If you
+                    don't see it, check your spam/junk folder.
                   </p>
                   <button
                     type="button"
@@ -316,7 +354,9 @@ export default function Auth() {
                 <div className="w-full border-t border-border/60" />
               </div>
               <div className="relative flex justify-center text-xs">
-                <span className="bg-card px-3 text-muted-foreground uppercase tracking-wider">or</span>
+                <span className="bg-card px-3 text-muted-foreground uppercase tracking-wider">
+                  or
+                </span>
               </div>
             </div>
 
@@ -364,7 +404,11 @@ export default function Auth() {
                     onClick={() => setShowPassword(!showPassword)}
                     tabIndex={-1}
                   >
-                    {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                    {showPassword ? (
+                      <EyeOff className="h-3.5 w-3.5" />
+                    ) : (
+                      <Eye className="h-3.5 w-3.5" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -393,7 +437,11 @@ export default function Auth() {
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       tabIndex={-1}
                     >
-                      {showConfirmPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                      {showConfirmPassword ? (
+                        <EyeOff className="h-3.5 w-3.5" />
+                      ) : (
+                        <Eye className="h-3.5 w-3.5" />
+                      )}
                     </button>
                   </div>
                 </div>
@@ -471,11 +519,19 @@ export default function Auth() {
                   />
                   <span>
                     I agree to the{" "}
-                    <Link to="/terms-of-service" target="_blank" className="text-accent hover:underline font-medium">
+                    <Link
+                      to="/terms-of-service"
+                      target="_blank"
+                      className="text-accent hover:underline font-medium"
+                    >
                       Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link to="/privacy-policy" target="_blank" className="text-accent hover:underline font-medium">
+                    <Link
+                      to="/privacy-policy"
+                      target="_blank"
+                      className="text-accent hover:underline font-medium"
+                    >
                       Privacy Policy
                     </Link>
                     .
@@ -507,7 +563,11 @@ export default function Auth() {
                   type="button"
                   className="text-xs text-muted-foreground hover:text-accent transition-colors"
                   onClick={async () => {
-                    const target = (email || window.prompt("Enter your account email to receive a reset link:") || "").trim();
+                    const target = (
+                      email ||
+                      window.prompt("Enter your account email to receive a reset link:") ||
+                      ""
+                    ).trim();
                     if (!target || !/^\S+@\S+\.\S+$/.test(target)) {
                       toast.error("Please enter a valid email");
                       return;
@@ -554,7 +614,10 @@ export default function Auth() {
 
           {/* Back to home */}
           <div className="mt-3 text-center">
-            <Link to="/" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              to="/"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
               ← Back to home
             </Link>
           </div>
@@ -582,7 +645,12 @@ export default function Auth() {
       </div>
 
       {/* Country prompt for Google OAuth users without country */}
-      <CountrySelectDialog open={showCountryPrompt} onSelect={handleCountrySelected} onClose={() => setShowCountryPrompt(false)} isLoading={savingCountry} />
+      <CountrySelectDialog
+        open={showCountryPrompt}
+        onSelect={handleCountrySelected}
+        onClose={() => setShowCountryPrompt(false)}
+        isLoading={savingCountry}
+      />
     </Layout>
   );
 }
