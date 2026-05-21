@@ -125,7 +125,7 @@ export default function Auth() {
 
       if (error) {
         toast.error("Google sign-in failed. Please try again.");
-        console.error("[AUTH] Google OAuth error:", error);
+        console.log("[AUTH] Google OAuth error:", error);
       }
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
