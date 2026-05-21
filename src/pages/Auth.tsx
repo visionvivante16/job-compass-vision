@@ -118,11 +118,8 @@ export default function Auth() {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
-      // console.log("ur68665465", window.location.origin);
-      // return;
       const { error } = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: "https://sociax.visionvivante.in/~oauth/callback",
-        // redirect_uri: `${window.location.origin}`,
+        redirect_uri: `${window.location.origin}`,
       });
       console.log("ur68665465", window.location.origin, error);
 
