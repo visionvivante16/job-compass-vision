@@ -1,0 +1,1 @@
+UPDATE public.jobs SET is_archived = true WHERE is_published = true AND is_archived = false AND deleted_at IS NULL AND external_apply_link ILIKE '%linkedin.com%';

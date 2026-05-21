@@ -1,0 +1,77 @@
+
+CREATE OR REPLACE FUNCTION public.search_jobs(search_query text, page_size integer DEFAULT 25, page_offset integer DEFAULT 0, filter_tab text DEFAULT 'all'::text)
+ RETURNS TABLE(id uuid, title text, company text, company_logo text, location text, description text, skills text[], external_apply_link text, is_published boolean, is_reviewing boolean, salary_range text, employment_type text, experience_years text, posted_date timestamp with time zone, created_at timestamp with time zone, updated_at timestamp with time zone, is_archived boolean, rank real)
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+DECLARE
+  today_start timestamptz := date_trunc('day', now());
+  yesterday_start timestamptz := date_trunc('day', now() - interval '1 day');
+  week_ago timestamptz := date_trunc('day', now() - interval '7 days');
+  clean_query text;
+BEGIN
+  -- Clean the search query for ILIKE usage
+  clean_query := trim(search_query);
+  
+  RETURN QUERY
+  SELECT 
+    j.id,
+    j.title,
+    j.company,
+    j.company_logo,
+    j.location,
+    j.description,
+    j.skills,
+    j.external_apply_link,
+    j.is_published,
+    j.is_reviewing,
+    j.salary_range,
+    j.employment_type,
+    j.experience_years,
+    j.posted_date,
+    j.created_at,
+    j.updated_at,
+    j.is_archived,
+    CASE 
+      WHEN clean_query IS NOT NULL AND clean_query != '' 
+        AND j.search_vector @@ websearch_to_tsquery('english', clean_query)
+      THEN ts_rank(j.search_vector, websearch_to_tsquery('english', clean_query))
+      WHEN clean_query IS NOT NULL AND clean_query != ''
+      THEN 0.01
+      ELSE 0
+    END as rank
+  FROM public.jobs j
+  WHERE 
+    j.is_published = true 
+    AND j.is_archived = false
+    AND (
+      clean_query IS NULL 
+      OR clean_query = '' 
+      OR j.search_vector @@ websearch_to_tsquery('english', clean_query)
+      OR j.company ILIKE '%' || clean_query || '%'
+      OR j.title ILIKE '%' || clean_query || '%'
+      OR j.location ILIKE '%' || clean_query || '%'
+    )
+    AND (
+      CASE filter_tab
+        WHEN 'today' THEN j.posted_date >= today_start
+        WHEN 'yesterday' THEN j.posted_date >= yesterday_start AND j.posted_date < today_start
+        WHEN 'week' THEN j.posted_date >= week_ago AND j.posted_date < yesterday_start
+        ELSE true
+      END
+    )
+  ORDER BY 
+    CASE 
+      WHEN clean_query IS NOT NULL AND clean_query != '' 
+        AND j.search_vector @@ websearch_to_tsquery('english', clean_query)
+      THEN ts_rank(j.search_vector, websearch_to_tsquery('english', clean_query))
+      WHEN clean_query IS NOT NULL AND clean_query != ''
+      THEN 0.01
+      ELSE 0
+    END DESC,
+    j.posted_date DESC
+  LIMIT page_size
+  OFFSET page_offset;
+END;
+$function$;

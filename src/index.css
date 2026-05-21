@@ -1,0 +1,546 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sociax Premium Design System
+   Editorial magazine meets modern SaaS
+   Display: Syne | Body: DM Sans
+   Light: Warm ivory + Electric blue accent
+   Dark: Deep charcoal + Cyan accent
+*/
+
+@layer base {
+  :root {
+    /* Core palette - Light Mode (soft off-white background, pure white cards) */
+    --background: 40 25% 97.5%;
+    --foreground: 230 30% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 230 30% 10%;
+
+    /* Dashboard gradient — subtle warm off-white wash */
+    --gradient-start: 40 30% 98.5%;
+    --gradient-mid: 40 25% 97%;
+    --gradient-end: 35 30% 95.5%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 230 30% 10%;
+
+    /* Deep ink primary */
+    --primary: 230 30% 10%;
+    --primary-foreground: 40 20% 98%;
+
+    /* Warm secondary */
+    --secondary: 40 18% 94%;
+    --secondary-foreground: 230 30% 10%;
+
+    --muted: 40 18% 94%;
+    --muted-foreground: 230 12% 42%;
+
+    /* Electric blue accent */
+    --accent: 220 90% 56%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Success */
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
+    --success-bg: 160 60% 94%;
+    --success-text: 160 84% 28%;
+
+    /* Borders — soft, low-contrast */
+    --border: 35 15% 89%;
+    --input: 35 15% 89%;
+    --ring: 220 90% 56%;
+
+    --radius: 0.875rem;
+
+    /* Chip/pill */
+    --chip-bg: 40 18% 94%;
+
+    /* Note card */
+    --note-bg: 40 100% 97%;
+    --note-border: 35 50% 70%;
+
+    /* Tab */
+    --tab-selected-bg: 220 90% 95%;
+    --tab-selected-text: 220 90% 50%;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 230 30% 10%;
+    --sidebar-primary: 220 90% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 18% 94%;
+    --sidebar-accent-foreground: 230 30% 10%;
+    --sidebar-border: 35 15% 89%;
+    --sidebar-ring: 220 90% 56%;
+
+    /* Glow effects */
+    --glow-accent: 220 90% 56%;
+  }
+
+  .dark {
+    /* Deep blackish base, slightly cool — not grey */
+    --background: 225 30% 4%;
+    --foreground: 210 25% 95%;
+
+    /* Cards sit slightly lighter than background with crisp border */
+    --card: 225 24% 8%;
+    --card-foreground: 210 25% 95%;
+
+    /* Dashboard gradient — deep black with subtle cool wash */
+    --gradient-start: 225 30% 5%;
+    --gradient-mid: 225 32% 3.5%;
+    --gradient-end: 230 35% 3%;
+
+    --popover: 225 24% 8%;
+    --popover-foreground: 210 25% 95%;
+
+    --primary: 210 25% 95%;
+    --primary-foreground: 225 30% 4%;
+
+    --secondary: 225 18% 12%;
+    --secondary-foreground: 210 25% 95%;
+
+    --muted: 225 18% 12%;
+    --muted-foreground: 220 12% 60%;
+
+    /* Cyan accent for dark */
+    --accent: 185 90% 52%;
+    --accent-foreground: 225 30% 4%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 25% 95%;
+
+    --success: 160 76% 44%;
+    --success-foreground: 0 0% 100%;
+    --success-bg: 160 40% 12%;
+    --success-text: 160 76% 70%;
+
+    /* Crisp, slightly luminous borders for definition on black */
+    --border: 225 20% 14%;
+    --input: 225 20% 14%;
+    --ring: 185 90% 52%;
+
+    --chip-bg: 225 18% 12%;
+
+    --note-bg: 35 30% 10%;
+    --note-border: 35 30% 22%;
+
+    --tab-selected-bg: 185 40% 14%;
+    --tab-selected-text: 185 90% 62%;
+
+    --sidebar-background: 225 28% 5%;
+    --sidebar-foreground: 210 25% 95%;
+    --sidebar-primary: 185 90% 52%;
+    --sidebar-primary-foreground: 225 30% 4%;
+    --sidebar-accent: 225 18% 12%;
+    --sidebar-accent-foreground: 210 25% 95%;
+    --sidebar-border: 225 20% 14%;
+    --sidebar-ring: 185 90% 52%;
+
+    --glow-accent: 185 90% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', system-ui, sans-serif;
+  }
+}
+
+@keyframes ats-glow {
+  0%, 100% {
+    box-shadow: 0 0 3px hsl(var(--accent) / 0.1), 0 0 8px hsl(var(--accent) / 0.05);
+    background: hsl(var(--accent) / 0.06);
+  }
+  50% {
+    box-shadow: 0 0 6px hsl(var(--accent) / 0.25), 0 0 14px hsl(var(--accent) / 0.12);
+    background: hsl(var(--accent) / 0.1);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .font-display {
+    font-family: 'Syne', system-ui, sans-serif;
+  }
+
+  .font-body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  /* Glass header */
+  .glass-header {
+    background: hsl(var(--background) / 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  /* Card glow on hover */
+  .card-glow {
+    transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
+  }
+
+  .card-glow:hover {
+    box-shadow: 0 8px 30px hsl(var(--glow-accent) / 0.12), 0 2px 8px hsl(var(--glow-accent) / 0.06);
+    transform: translateY(-3px);
+    border-color: hsl(var(--accent) / 0.3);
+  }
+
+  /* Subtle 3D tilt on cards */
+  .tilt-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.3s ease;
+  }
+
+  .tilt-card:hover {
+    transform: translateY(-3px) rotateX(1.5deg) rotateY(-1.5deg);
+  }
+
+  /* Hero gradient mesh background */
+  .hero-mesh-bg {
+    background: 
+      radial-gradient(ellipse at 20% 50%, hsl(var(--accent) / 0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 20%, hsl(270 70% 55% / 0.14) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 80%, hsl(var(--accent) / 0.10) 0%, transparent 55%),
+      hsl(var(--background));
+  }
+
+  .dark .hero-mesh-bg {
+    background: 
+      radial-gradient(ellipse at 20% 50%, hsl(var(--accent) / 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, hsl(270 60% 50% / 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, hsl(185 90% 50% / 0.06) 0%, transparent 50%),
+      hsl(var(--background));
+  }
+
+  /* Gradient text for hero */
+  .hero-gradient-text {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--accent)) 0%,
+      hsl(270 80% 65%) 50%,
+      hsl(var(--accent)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: gradientShift 4s ease-in-out infinite;
+  }
+
+  /* Button glow effect */
+  .btn-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-glow::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      hsl(0 0% 100% / 0.15) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .btn-glow:hover::after {
+    transform: translateX(100%);
+  }
+
+  /* Noise texture overlay */
+  .noise-bg {
+    position: relative;
+  }
+
+  .noise-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Stagger animation */
+  .stagger-fade-in {
+    animation: fadeSlideUp 0.5s ease-out both;
+  }
+
+  /* Shadows — premium, soft, layered */
+  .shadow-premium {
+    box-shadow:
+      0 1px 2px hsl(var(--foreground) / 0.04),
+      0 8px 24px -8px hsl(var(--foreground) / 0.08);
+  }
+
+  .shadow-soft {
+    box-shadow: 0 1px 3px hsl(var(--foreground) / 0.04), 0 1px 2px hsl(var(--foreground) / 0.03);
+  }
+
+  /* Dashboard gradient background — soft off-white in light, deep black with subtle wash in dark */
+  .dashboard-gradient {
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, hsl(var(--gradient-start)) 0%, transparent 70%),
+      linear-gradient(180deg,
+        hsl(var(--gradient-mid)) 0%,
+        hsl(var(--gradient-end)) 100%
+      );
+    min-height: 100vh;
+  }
+
+  .dark .dashboard-gradient {
+    background:
+      radial-gradient(ellipse 70% 40% at 50% -10%, hsl(220 60% 12% / 0.5) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 100% 100%, hsl(185 80% 10% / 0.25) 0%, transparent 60%),
+      linear-gradient(180deg,
+        hsl(var(--gradient-start)) 0%,
+        hsl(var(--gradient-mid)) 50%,
+        hsl(var(--gradient-end)) 100%
+      );
+    min-height: 100vh;
+  }
+
+  /* Soft glow layer behind content */
+  .content-glow {
+    position: relative;
+  }
+
+  .content-glow::before {
+    content: "";
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 300px;
+    background: radial-gradient(ellipse, hsl(42 80% 88% / 0.35) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(60px);
+  }
+
+  .dark .content-glow::before {
+    background: radial-gradient(ellipse, hsl(185 90% 30% / 0.08) 0%, transparent 70%);
+  }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 200% center; }
+}
+
+/* Theme transition */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Override transition for animations */
+[class*="animate-"],
+[class*="transition-"] {
+  transition-property: all;
+}
+
+/* Floating hero tag drift animations */
+@keyframes floatDrift1 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(6px, -8px); }
+  50% { transform: translate(-4px, 5px); }
+  75% { transform: translate(8px, 3px); }
+}
+@keyframes floatDrift2 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-7px, 6px); }
+  66% { transform: translate(5px, -7px); }
+}
+@keyframes floatDrift3 {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(4px, 8px); }
+  60% { transform: translate(-6px, -4px); }
+  80% { transform: translate(7px, -2px); }
+}
+@keyframes floatDrift4 {
+  0%, 100% { transform: translate(0, 0); }
+  40% { transform: translate(-5px, -6px); }
+  70% { transform: translate(6px, 4px); }
+}
+@keyframes floatDrift5 {
+  0%, 100% { transform: translate(0, 0); }
+  30% { transform: translate(8px, 4px); }
+  60% { transform: translate(-3px, -8px); }
+  90% { transform: translate(-6px, 5px); }
+}
+
+/* Hide scrollbar for mobile tags */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Subtle thin scrollbar */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground) / 0.4);
+}
+
+@keyframes border-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+@keyframes shine-sweep {
+  0%, 100% { background-position: 200% 50%; }
+  50% { background-position: -100% 50%; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Tailored Resume Editor
+   - Keyword highlights are preview-only and stripped on export.
+   - All resume text MUST be solid black; nothing faded/translucent.
+   ───────────────────────────────────────────────────────────── */
+.resume-kw-highlight {
+  background-color: hsl(174 72% 56% / 0.28);
+  border-radius: 2px;
+  padding: 0 1px;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+.resume-kw-highlight:hover {
+  background-color: hsl(174 72% 56% / 0.45);
+}
+
+/* AI-rewritten bullet wrapper. Subtle teal underline tint, text stays black. */
+.resume-changed-bullet {
+  background-color: hsl(174 72% 56% / 0.10);
+  box-shadow: inset 0 -2px 0 0 hsl(174 72% 56% / 0.55);
+}
+
+/* Force every text node inside the canvas to solid black, no opacity ghosting. */
+[data-resume-canvas],
+[data-resume-canvas] * {
+  color: #000 !important;
+}
+[data-resume-canvas] [contenteditable]:empty::before,
+[data-resume-canvas] .is-editor-empty::before {
+  color: #9ca3af !important; /* placeholder-only grey */
+}
+[data-resume-canvas] mark.resume-kw-highlight,
+[data-resume-canvas] mark.resume-kw-highlight * {
+  color: #000 !important;
+}
+
+/* Hidden-from-export marker. Item is still editable & recoverable. */
+.resume-hidden-item {
+  opacity: 0.45;
+  text-decoration: line-through;
+  text-decoration-color: hsl(0 0% 30% / 0.5);
+}
+.resume-hidden-item [contenteditable] {
+  text-decoration: line-through;
+}
+
+/* Light teal hover for "Add bullet" / "Add skill" buttons inside the canvas. */
+[data-resume-canvas] .resume-add-btn {
+  color: #0f6e56;
+  background-color: transparent;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+[data-resume-canvas] .resume-add-btn:hover,
+[data-resume-canvas] .resume-add-btn:focus-visible {
+  background-color: #e0faf5 !important;
+  color: #0f6e56 !important;
+}

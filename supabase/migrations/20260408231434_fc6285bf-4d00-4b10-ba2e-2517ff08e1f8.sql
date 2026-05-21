@@ -1,0 +1,1 @@
+UPDATE public.jobs SET is_archived = true WHERE is_published = true AND is_archived = false AND deleted_at IS NULL AND id = '5a443504-fb03-4f8a-a193-917f646b8f87';

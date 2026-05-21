@@ -1,0 +1,40 @@
+project_id = "dyguncqqjzuyiwxhgwcw"
+
+[functions.import-google-sheet]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false
+
+[functions.check-subscription]
+verify_jwt = false
+
+[functions.api-login]
+verify_jwt = false
+
+[functions.api-profile]
+verify_jwt = false
+
+[functions.ats-check]
+verify_jwt = false
+
+[functions.socia-chat]
+verify_jwt = false
+
+[functions.analyze-resume]
+verify_jwt = false
+
+[functions.resume-tips]
+verify_jwt = false
+
+[functions.generate-cover-letter]
+verify_jwt = false
+
+[functions.admin-payments]
+verify_jwt = false
+
+[functions.tailor-resume]
+verify_jwt = false
+
+[functions.extract-resume-structure]
+verify_jwt = false

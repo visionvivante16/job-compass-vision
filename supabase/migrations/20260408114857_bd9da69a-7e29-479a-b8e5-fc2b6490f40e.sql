@@ -1,0 +1,1 @@
+ALTER TABLE public.role_requests ADD COLUMN acknowledged_at timestamp with time zone DEFAULT NULL;

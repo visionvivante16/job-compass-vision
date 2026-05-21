@@ -1,0 +1,1 @@
+DELETE FROM public.jobs WHERE lower(company) LIKE '%haystack%';

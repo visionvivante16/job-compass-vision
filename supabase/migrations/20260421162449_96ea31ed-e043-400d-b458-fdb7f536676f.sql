@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS public.remotive_ingest_runs;

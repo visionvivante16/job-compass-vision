@@ -1,0 +1,1 @@
+CREATE POLICY "Admins can update role requests" ON public.role_requests FOR UPDATE TO authenticated USING (is_admin()) WITH CHECK (is_admin());
