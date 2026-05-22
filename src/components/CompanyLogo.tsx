@@ -74,7 +74,8 @@ export function CompanyLogo({ logoUrl, companyName, size = "md", className }: Co
 
   // Generate a gradient based on company name
   const getGradient = (name: string) => {
-    const hash = name.split("").reduce((acc, c) => c.charCodeAt(0) + acc, 0);
+    const safeName = name || "";
+    const hash = safeName.split("").reduce((acc, c) => c.charCodeAt(0) + acc, 0);
     const gradients = [
       "from-accent/20 to-accent/5",
       "from-success/20 to-success/5",
