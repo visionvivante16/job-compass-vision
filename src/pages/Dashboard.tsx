@@ -408,25 +408,25 @@ export default function Dashboard() {
     : (searchData?.totalPages ?? 1);
 
   // TEMP DIAGNOSTIC: trace why dashboard shows "No jobs found" for some users
-  useEffect(() => {
-    console.log("[Dashboard diag]", {
-      userId: user?.id,
-      hasIntelligence: !!intelligence,
-      shouldTryPersonalizedFeed,
-      personalizedJobsLen: personalizedJobs.length,
-      usePriorityOrdering,
-      rawJobsLen: rawJobs.length,
-      jobsLen: jobs.length,
-      totalCount,
-      searchDataExists: !!searchData,
-      isLoading,
-      isFetching,
-      combinedSearchQuery,
-      categoryId,
-      visaFilter,
-      dateFilter,
-    });
-  }, [user?.id, intelligence, shouldTryPersonalizedFeed, personalizedJobs.length, usePriorityOrdering, rawJobs.length, jobs.length, totalCount, searchData, isLoading, isFetching, combinedSearchQuery, categoryId, visaFilter, dateFilter]);
+  // useEffect(() => {
+  //   console.log("[Dashboard diag]", {
+  //     userId: user?.id,
+  //     hasIntelligence: !!intelligence,
+  //     shouldTryPersonalizedFeed,
+  //     personalizedJobsLen: personalizedJobs.length,
+  //     usePriorityOrdering,
+  //     rawJobsLen: rawJobs.length,
+  //     jobsLen: jobs.length,
+  //     totalCount,
+  //     searchDataExists: !!searchData,
+  //     isLoading,
+  //     isFetching,
+  //     combinedSearchQuery,
+  //     categoryId,
+  //     visaFilter,
+  //     dateFilter,
+  //   });
+  // }, [user?.id, intelligence, shouldTryPersonalizedFeed, personalizedJobs.length, usePriorityOrdering, rawJobs.length, jobs.length, totalCount, searchData, isLoading, isFetching, combinedSearchQuery, categoryId, visaFilter, dateFilter]);
 
   useEffect(() => {
     setCurrentPage((prev) => Math.min(prev, totalPages));

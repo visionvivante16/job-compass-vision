@@ -43,10 +43,13 @@ export interface ExtractedResumeData {
 
 export function useResumeParser() {
   const [isParsing, setIsParsing] = useState(false);
-  const [extractedData, setExtractedData] = useState<ExtractedResumeData | null>(null);
+  const [extractedData, setExtractedData] =
+    useState<ExtractedResumeData | null>(null);
   const { toast } = useToast();
 
-  const parseResume = async (file: File): Promise<ExtractedResumeData | null> => {
+  const parseResume = async (
+    file: File,
+  ): Promise<ExtractedResumeData | null> => {
     setIsParsing(true);
     try {
       const buffer = await file.arrayBuffer();
@@ -61,9 +64,19 @@ export function useResumeParser() {
         body: {
           file_base64: base64,
           filename: file.name,
-          mime_type: file.type || "application/pdf",
+          // mime_type: file.type || "application/pdf",
+          mime_type: file.type || "",
         },
       });
+
+      console.log("data =====>", data);
+
+      if (error) {
+        const errorBody = await error.context?.json();
+        const errorObj = JSON.parse(errorBody.details);
+
+        console.log("Edge function response ====>", errorObj.error.message);
+      }
 
       if (error) throw new Error(error.message || "Failed to parse resume");
       if (data?.error) throw new Error(data.error);
@@ -72,6 +85,7 @@ export function useResumeParser() {
       setExtractedData(extracted);
       return extracted;
     } catch (err: any) {
+      console.log("errr---=34-43434", err);
       toast({
         title: "Resume parsing failed",
         description: err.message || "Could not extract data from resume",

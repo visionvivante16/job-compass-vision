@@ -101,15 +101,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
     });
 
-    if (!error && country) {
-      // Update profile with country after signup
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        await supabase.from("profiles").update({ country }).eq("user_id", user.id);
-      }
-    }
+    //old
+    // if (!error && country) {
+    //   // Update profile with country after signup
+    //   const { data: { user } } = await supabase.auth.getUser();
+    //   if (user) {
+    //     await supabase.from("profiles").update({ country }).eq("user_id", user.id);
+    //   }
+    // }
 
     return { error: error as Error | null };
   };

@@ -20,7 +20,7 @@ function parseJob(row: any): Job {
     external_apply_link: row.external_apply_link,
     is_published: row.is_published,
     is_reviewing: row.is_reviewing,
-    salary_range: row.salary_range,
+    salary_range: row.salary_range ?? null,
     employment_type: row.employment_type || 'Full Time',
     experience_years: row.experience_years,
     posted_date: new Date(row.posted_date),
@@ -58,6 +58,8 @@ export function useJobs() {
 export function useApplications() {
   const { user } = useAuth();
 
+  // console.log("user ===>", user);
+
   return useQuery({
     queryKey: ["applications", user?.id],
     queryFn: async () => {
@@ -65,13 +67,38 @@ export function useApplications() {
       
       const { data, error } = await supabase
         .from("applications")
-        .select(`
-          *,
-          job:jobs(*)
-        `)
+        // .select(`
+        //   *,
+        //   job:jobs(*)
+        // `)
+         .select(`
+            id,
+            user_id,
+            job_id,
+            status,
+            applied_at,
+            updated_at,
+            job:jobs (
+             id,
+             title,
+              company,
+              company_logo,
+              location,
+              description,
+              skills,
+              salary_range,
+              employment_type,
+              experience_years,
+              external_apply_link,
+              is_published,
+              is_direct_apply,
+              created_at
+            )
+          `)
         .eq("user_id", user.id)
-        .not("status", "in", '("withdrawn","clicked")')
-        .order("applied_at", { ascending: false });
+        .not("status", "in", "(withdrawn,clicked)")
+        .order("applied_at", { ascending: false })
+        .limit(100);
 
       if (error) throw error;
       return (data || []).map((row) => ({
@@ -151,11 +178,24 @@ export function useJobActions() {
     mutationFn: async ({ job, status = "applied" }: { job: Job; status?: string }) => {
       if (!user) throw new Error("Must be logged in to apply");
 
-      const { error } = await supabase.from("applications").insert({
-        user_id: user.id,
-        job_id: job.id,
-        status,
-      });
+      const { error } = await supabase.from("applications")
+      // .insert({
+      //   user_id: user.id,
+      //   job_id: job.id,
+      //   status,
+      //   updated_at: new Date().toISOString(),
+      // });
+      .upsert({
+          user_id: user.id,
+          job_id: job.id,
+          status,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          onConflict: "user_id,job_id",
+          ignoreDuplicates: false,
+        }
+      );
 
       if (error && error.code !== "23505") throw error;
       return job;
