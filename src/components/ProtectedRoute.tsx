@@ -14,6 +14,8 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
   const { user, isLoading: authLoading } = useAuth();
   const { data: userRole, isLoading: roleLoading } = useUserRole();
 
+  // console.log("role ===>", userRole);
+
   // Show loading while auth or role is being determined
   if (authLoading || roleLoading) {
     return <FullPageLoader message="Checking access..." />;

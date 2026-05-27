@@ -112,6 +112,8 @@ export function useUserRole() {
         .select("role")
         .eq("user_id", user.id);
 
+        // console.log("roles ===>", roles, user, error);
+
       // Roles fetched for debugging if needed
 
       if (!roles || roles.length === 0) {
