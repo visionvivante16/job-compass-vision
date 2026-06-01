@@ -28,14 +28,16 @@ export function useLandingStats() {
         supabase.rpc("get_public_user_count"),
       ]);
 
+      // console.log("response ====>",jobRes, companyCountRes, userCountRes);
+
       if (jobRes.error) throw jobRes.error;
       if (companyCountRes.error) throw companyCountRes.error;
       if (userCountRes.error) throw userCountRes.error;
 
       return {
         jobCount: jobRes.count ?? 0,
-        companyCount: Number(companyCountRes.data ?? 0),
-        userCount: Number(userCountRes.data ?? 0),
+        companyCount: companyCountRes.data.total_companies ?? 0,
+        userCount: userCountRes.data.total_users ?? 0,
       };
     },
     staleTime: 60 * 1000,

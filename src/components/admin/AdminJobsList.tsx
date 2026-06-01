@@ -151,7 +151,7 @@ export function AdminJobsList({
               </div>
 
               <div className="flex flex-wrap gap-1.5 mt-3">
-                {job.skills.slice(0, 4).map((skill) => (
+                {Array.isArray(job.skills) && job.skills.slice(0, 4).map((skill) => (
                   <Badge key={skill} variant="secondary" className="text-xs">
                     {skill}
                   </Badge>

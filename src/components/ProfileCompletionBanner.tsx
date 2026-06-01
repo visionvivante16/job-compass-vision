@@ -17,6 +17,7 @@ const STORAGE_KEY = "sociax_profile_banner_dismissed";
 
 export function ProfileCompletionBanner({ force = false }: { force?: boolean } = {}) {
   const info = useProfileCompleteness();
+  console.log("%%$$0", info);
   const ageDays = useAccountAgeDays();
   const [dismissed, setDismissed] = useState(() => {
     if (force) return false;
@@ -31,7 +32,7 @@ export function ProfileCompletionBanner({ force = false }: { force?: boolean } =
   });
 
   // Always show on /profile if force=true; otherwise day 2+ rule
-  if (!info || info.percent >= 100) return null;
+  if (!info || info.percentage >= 100) return null;
   if (!force) {
     if (ageDays === null || ageDays < 1) return null;
     if (dismissed) return null;
@@ -67,13 +68,13 @@ export function ProfileCompletionBanner({ force = false }: { force?: boolean } =
             <div className="flex items-center gap-2 mb-1">
               <Sparkles className="h-4 w-4 text-primary" />
               <h3 className="font-semibold text-sm sm:text-base">
-                Your profile is {info.percent}% complete
+                Your profile is {info.percentage}% complete
               </h3>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground mb-2">
               Complete it to unlock job matches and ATS check.
             </p>
-            <Progress value={info.percent} className="h-2 mb-2" />
+            <Progress value={info.percentage} className="h-2 mb-2" />
             {info.missing.length > 0 && (
               <ul className="text-xs text-muted-foreground space-y-0.5">
                 {info.missing.slice(0, 3).map((m) => (
