@@ -36,8 +36,8 @@ export function useLandingStats() {
 
       return {
         jobCount: jobRes.count ?? 0,
-        companyCount: companyCountRes.data.total_companies ?? 0,
-        userCount: userCountRes.data.total_users ?? 0,
+        companyCount: companyCountRes.data ?? 0,
+        userCount: userCountRes.data ?? 0,
       };
     },
     staleTime: 60 * 1000,

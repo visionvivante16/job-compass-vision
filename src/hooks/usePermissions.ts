@@ -164,6 +164,8 @@ export function useAllUsers() {
         .select("user_id, email, full_name, employer_id, is_active, is_premium")
         .order("created_at", { ascending: false });
 
+        // console.log("profiles ---->", profiles);
+
       if (profilesError) throw profilesError;
 
       // Get all user roles
@@ -197,6 +199,8 @@ export function useAllUsers() {
           permissions: userPermissions || null,
         };
       });
+
+      // console.log("%%$$$ all users with roles", usersWithRoles, profiles);
 
       return usersWithRoles;
     },

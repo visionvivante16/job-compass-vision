@@ -22,6 +22,8 @@ export function ProfileAvatar({ size = "sm", showBadge = true }: ProfileAvatarPr
   const { user } = useAuth();
   const { profile } = useProfile();
 
+  // console.log("Admin Prodile, profile ===>", profile);
+
   const badge = useMemo(() => {
     const state = loadBadgeState();
     return state.totalCompletions > 0 ? state : null;

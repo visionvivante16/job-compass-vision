@@ -93,6 +93,8 @@ export function OnboardingWizard() {
     { icon: Upload, label: "Resume", title: "Upload your resume" },
   ][step];
 
+  // console.log("OnboardingWizard render", { saving, visible, step, role, location });  
+
   return (
     <AnimatePresence>
       {visible && (
