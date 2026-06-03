@@ -95,7 +95,7 @@ export function useProfileCompleteness() {
       const { data, error } = await supabase.rpc("profile_completeness", {
         p_user_id: user.id,
       });
-      console.log("profile 88888*****", data);
+      // console.log("profile 88888*****", data);
       if (!error && data) setInfo(data as unknown as CompletenessInfo);
     })();
   }, [user]);
