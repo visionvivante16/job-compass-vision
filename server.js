@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 
 app.use(cookieParser());
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8009;
 const SITE_URL = process.env.SITE_URL || "https://staging.sociax.tech";
 
 const DEFAULT_SEO = {
