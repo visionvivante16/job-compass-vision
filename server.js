@@ -14,8 +14,8 @@ const __dirname = path.dirname(__filename);
 
 app.use(cookieParser());
 
-const PORT = process.env.PORT || 8009;
-const SITE_URL = process.env.SITE_URL || "https://staging.sociax.tech";
+const PORT = process.env.PORT;
+const SITE_URL = process.env.SITE_URL;
 
 const DEFAULT_SEO = {
   title: "Sociax - Jobs for Fresh Graduates & Early Career Professionals",
