@@ -13,7 +13,7 @@ export function useSearchSuggestions(query: string, enabled = true) {
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    if (!enabled || query.trim().length < 2) {
+    if (!enabled || query.trim().length < 1) {
       abortRef.current?.abort();
       setSuggestions([]);
       setIsLoading(false);

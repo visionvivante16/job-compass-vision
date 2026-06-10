@@ -347,12 +347,14 @@ export default function Dashboard() {
 
     // When a category pill is active (and no custom search), trust the server's
     // results so a 20-row page isn't reduced to ~2. Just sort by recency.
-    if (!categoryId || searchInput.trim().length >= 2) return base;
+    if (!categoryId || searchInput.trim().length >= 1) return base;
 
     return [...base].sort(
       (a, b) => b.posted_date.getTime() - a.posted_date.getTime()
     );
   }, [usePriorityOrdering, prioritizedPageQuery.data, rawJobs, categoryId, searchInput]);
+
+  // console.log("jobs --->", jobs);
 
   const isLoading = usePriorityOrdering
     ? recommendedLoading || searchLoading || prioritizedPageQuery.isLoading

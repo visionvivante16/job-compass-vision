@@ -135,7 +135,7 @@ export default function Index() {
   const { suggestions } = useSearchSuggestions(heroSearch, heroFocused);
   const { data: landingStats } = useLandingStats();
   // console.log("landingStats", landingStats);
-  const showSuggestions = heroFocused && heroSearch.trim().length >= 2 && suggestions.length > 0;
+  const showSuggestions = heroFocused && heroSearch.trim().length >= 1 && suggestions.length > 0;
 
   const handleHeroSearch = useCallback((query?: string) => {
     const q = query || heroSearch.trim();
